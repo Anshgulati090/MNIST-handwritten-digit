@@ -1,17 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use official Python image
+FROM python:3.10-slim
 
-# Set the working directory inside the container
+# Set working directory inside container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+# Copy your project files
 COPY . /app
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Expose port 8888 for Jupyter Notebook
-EXPOSE 8888
-
-# Run Jupyter Notebook when the container starts
-CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--port=8888", "--no-browser"]
+# Optional: Run notebook or script (replace with your entrypoint script)
+CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--allow-root", "--no-browser"]
