@@ -1,46 +1,26 @@
 pipeline {
     agent any
 
-    environment {
-        VENV_DIR = 'venv'
-    }
-
     stages {
         stage('Clone Repository') {
             steps {
-                echo 'Repository cloned by Jenkins automatically.'
+                git 'https://github.com/Anshgulati090/MNIST-handwritten-digit.git'
             }
         }
 
-        stage('Setup Python Virtual Environment') {
+        stage('Build Docker Image') {
             steps {
-                sh 'python -m venv $VENV_DIR'
-                sh './$VENV_DIR/Scripts/activate && pip install --upgrade pip'
+                sh 'docker build -t anshhgulati/mnist-jenkins-project .'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Push to DockerHub') {
             steps {
-                sh './$VENV_DIR/Scripts/activate && pip install -r requirements.txt'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    sh 'docker push anshhgulati/mnist-jenkins-project'
+                }
             }
-        }
-
-        stage('Run Jupyter Notebook (optional)') {
-            steps {
-                sh './$VENV_DIR/Scripts/activate && jupyter nbconvert --to notebook --execute Handwritten_Digits_Recognition.ipynb'
-            }
-        }
-
-        stage('Success') {
-            steps {
-                echo 'Pipeline completed successfully.'
-            }
-        }
-    }
-
-    post {
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
