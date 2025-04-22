@@ -764,11 +764,6 @@ submission.head()
 </div>
 
 
-
-Kaggle Submission Result:
-
-<a href="https://drive.google.com/uc?export=view&id=16n-tsBjTTB4ahl2S2G8cRV-kjgKjdlJ7"><img src="https://drive.google.com/uc?export=view&id=16n-tsBjTTB4ahl2S2G8cRV-kjgKjdlJ7" style="width: 500px; max-width: 100%; height: auto" title="Click for the larger version." /></a>
-
 *   Test Accuracy Before PCA = 98.314%
 *   Test Accuracy After PCA = 98.414%
 
