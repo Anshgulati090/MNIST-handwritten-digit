@@ -35,4 +35,3 @@ The CI/CD process is handled by Jenkins and includes:
 2. Automated unit testing with PyTest
 3. Docker image creation and push
 4. Auto-deploy to server (local)
-
